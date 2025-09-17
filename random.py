@@ -11,6 +11,10 @@ class TurtleController(Node):
         self.time = 0
 
     def create_twist(self, linear_x, angular_z):
+        '''
+        Input a specified linear (x) and angular (z) velocity
+        Output a Twist message with those velocities that can be published to /turtle1/cmd_vel to control the turtle's movement.
+        '''
         msg = Twist()
         msg.linear.x = linear_x
         msg.angular.z = angular_z
@@ -23,7 +27,7 @@ class TurtleController(Node):
         Here is the breakdown of the cool S generation:
         
 
-        1. (0–2s): Rotate in place at -pi/2 radians.
+        1. (0–2s): Rotate at -pi/2 radians.
         2. (2–4s): Move forward 1 unit.
         3. (4–6s): Rotate at +pi/4 radians.
         4. (6–8s): Move forward 1 unit.
@@ -147,9 +151,6 @@ def main(args=None):
 
     rclpy.spin(turtle_controller)
 
-    # Destroy the node explicitly
-    # (optional - otherwise it will be done automatically
-    # when the garbage collector destroys the node object)
     turtle_controller.destroy_node()
     rclpy.shutdown()
 
