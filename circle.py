@@ -11,12 +11,29 @@ class TurtleController(Node):
         self.time = 0
 
     def create_twist(self, linear_x, angular_z):
+        '''
+        Input a specified linear (x) and angular (z) velocity
+        Output a Twist message with those velocities that can be published to /turtle1/cmd_vel to control the turtle's movement.
+        '''
         msg = Twist()
         msg.linear.x = linear_x
         msg.angular.z = angular_z
         return msg
 
     def get_twist_msg(self):
+        '''
+        The goal is to generate a circle, I chose a radius of 4 and angular velocity of pi/2. 
+        It is important to maintain this ratio between linear and angular velocity to ensure a perfect circle.
+
+        Here is the breakdown of the circle generation:
+        
+        First quadrant: Transform radians from 0 to pi/2 with a total linear distance of 4 units.
+        Second quadrant: Transform radians from pi/2 to pi with a total linear distance of 4 units.
+        Third quadrant: Transform radians from pi to 3pi/2 with a total linear distance of 4 units.
+        Fourth quadrant: Transform radians from 3pi/2 to 2pi/0 with a total linear distance of 4 units.
+
+        Finally, stop the turtle indefinitely after completing the circle.
+        '''
         if 0 <= self.time < 2:
             msg = self.create_twist(4.0, 1.57079632679)
         elif 2 <= self.time < 4:
@@ -43,9 +60,6 @@ def main(args=None):
 
     rclpy.spin(turtle_controller)
 
-    # Destroy the node explicitly
-    # (optional - otherwise it will be done automatically
-    # when the garbage collector destroys the node object)
     turtle_controller.destroy_node()
     rclpy.shutdown()
 

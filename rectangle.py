@@ -11,27 +11,45 @@ class TurtleController(Node):
         self.time = 0
 
     def create_twist(self, linear_x, angular_z):
+        '''
+        Input a specified linear (x) and angular (z) velocity
+        Output a Twist message with those velocities that can be published to /turtle1/cmd_vel to control the turtle's movement.
+        '''
         msg = Twist()
         msg.linear.x = linear_x
         msg.angular.z = angular_z
         return msg
 
     def get_twist_msg(self):
-        if 0 <= self.time < 4:
+        '''
+        The goal is to generate a rectangle, I chose side lengths of 1 and 4 units with angles of pi/2.
+
+        Here is the breakdown of the rectangle generation:
+        
+
+        First Side: Travel a linear distance of 1 unit and then turn pi/2 radians.
+        Second Side: Travel a linear distance of 4 units and then turn pi/2 radians.
+        Third Side: Travel a linear distance of 1 unit and then turn pi/2 radians.
+        Fourth Side: Travel a linear distance of 4 units and then turn pi/2 radians.
+
+        Finally, stop the turtle indefinitely after completing the rectangle.
+        '''
+        #NEED TO TEST THIS ONE AGAIN
+        if 0 <= self.time < 2:
             msg = self.create_twist(1.0, 0.0)
+        elif 2 <= self.time < 4:
+            msg = self.create_twist(0.0, 1.57079632679)
         elif 4 <= self.time < 6:
+            msg = self.create_twist(4.0, 0.0)
+        elif 6 <= self.time < 8:
             msg = self.create_twist(0.0, 1.57079632679)
-        elif 6 <= self.time < 15:
+        elif 8 <= self.time < 10:
             msg = self.create_twist(1.0, 0.0)
-        elif 15 <= self.time < 17:
+        elif 10 <= self.time < 12:
             msg = self.create_twist(0.0, 1.57079632679)
-        elif 17 <= self.time < 21:
-            msg = self.create_twist(1.0, 0.0)
-        elif 21 <= self.time < 23:
-            msg = self.create_twist(0.0, 1.57079632679)
-        elif 23 <= self.time < 32:
-            msg = self.create_twist(1.0, 0.0)
-        elif 32 <= self.time < 34:
+        elif 12 <= self.time < 14:
+            msg = self.create_twist(4.0, 0.0)
+        elif 14 <= self.time < 16:
             msg = self.create_twist(0.0, 1.57079632679)
         else:
             msg = self.create_twist(0.0, 0.0)

@@ -11,12 +11,29 @@ class TurtleController(Node):
         self.time = 0
 
     def create_twist(self, linear_x, angular_z):
+        '''
+        Input a specified linear (x) and angular (z) velocity
+        Output a Twist message with those velocities that can be published to /turtle1/cmd_vel to control the turtle's movement.
+        '''
         msg = Twist()
         msg.linear.x = linear_x
         msg.angular.z = angular_z
         return msg
 
     def get_twist_msg(self):
+        '''
+        The goal is to generate a diamond, I chose a side lengths of 2 units and angles of pi/3 and 2pi/3. 
+
+        Here is the breakdown of the diamond generation:
+        
+
+        First Edge: Transform radians from 0 to pi/3 and travel a linear distance of 2 units.
+        Second Edge: Transform radians from pi/3 to 2pi/3 and travel a linear distance of 2 units.
+        Third Edge: Transform radians from 2pi/3 to 4pi/3 and travel a linear distance of 2 units.
+        Fourth Edge: Transform radians from 4pi/3 to 5pi/3 and travel a linear distance of 2 units.
+
+        Finally, stop the turtle indefinitely after completing the diamond
+        '''
         if 0 <= self.time < 2:
             msg = self.create_twist(0.0, 1.0471975512)
         elif 2 <= self.time < 4:
@@ -42,7 +59,7 @@ class TurtleController(Node):
         msg = self.get_twist_msg()       
         self.publisher.publish(msg)
         self.time += 1
-        print("time: {}".format(self.time))
+        print("Generating diamond, time: {}".format(self.time))
 
 def main(args=None):
     rclpy.init(args=args)

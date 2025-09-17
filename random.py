@@ -17,6 +17,49 @@ class TurtleController(Node):
         return msg
 
     def get_twist_msg(self):
+        '''
+        The goal is to generate a cool S. This multiple lines and turns of varying lengths and angles.
+
+        Here is the breakdown of the cool S generation:
+        
+
+        1. (0–2s): Rotate in place at -pi/2 radians.
+        2. (2–4s): Move forward 1 unit.
+        3. (4–6s): Rotate at +pi/4 radians.
+        4. (6–8s): Move forward 1 unit.
+        5. (10–12s): Rotate at +pi/2 radians.
+        6. (12–14s): Move forward 1 unit.
+        7. (14–16s): Rotate at +pi/4 radians.
+        8. (16–18s): Move forward 1 unit.
+        9. (18–20s): Rotate at +pi/4 radians.
+        10. (20–22s): Move forward 2 units.
+        11. (22–24s): Rotate at +pi/2 radians.
+        12. (24–26s): Move forward 2 units.
+        13. (26–28s): Rotate at +pi/4 radians.
+        14. (28–30s): Move forward 1 unit.
+        15. (30–32s): Rotate at +pi/4 radians.
+        16. (32–34s): Move forward 2 units.
+        17. (34–36s): Rotate at -pi/4 radians.
+        18. (36–38s): Move forward 1 unit.
+        19. (38–40s): Rotate at pi radians.
+        20. (40–42s): Move forward 1 unit.
+        21. (42–44s): Rotate at +pi/4 radians.
+        22. (44–46s): Move forward 1 unit.
+        23. (46–48s): Rotate at +pi/2 radians.
+        24. (48–50s): Move forward 1 unit.
+        25. (50–52s): Rotate at +pi/4 radians.
+        26. (52–54s): Move forward 1 unit.
+        27. (54–56s): Rotate at +pi/4 radians.
+        28. (56–58s): Move forward 2 units.
+        29. (58–60s): Rotate at +pi/2 radians.
+        30. (60–62s): Move forward 2 units.
+        31. (62–64s): Rotate at +pi/4 radians.
+        32. (64–66s): Move forward 1 unit.
+        33. (66–68s): Rotate at +pi/4 radians.
+        34. (68–70s): Move forward 2 units.
+        
+        Finally, stop the turtle indefinitely after completing the cool S.
+        '''
         if 0 <= self.time < 2:
             msg = self.create_twist(0.0, -1.57079632679)
         elif 2 <= self.time < 4:
@@ -95,7 +138,7 @@ class TurtleController(Node):
         msg = self.get_twist_msg()       
         self.publisher.publish(msg)
         self.time += 1
-        print("time: {}".format(self.time))
+        print("Generating cool S, time: {}".format(self.time))
 
 def main(args=None):
     rclpy.init(args=args)
